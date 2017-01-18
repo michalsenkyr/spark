@@ -17,8 +17,6 @@
 
 package org.apache.spark.sql.execution.benchmark
 
-import scala.reflect.ClassTag
-
 /**
  * Benchmark [[Seq]], [[List]] and [[scala.collection.mutable.Queue]] serialization
  * performance.
