@@ -445,6 +445,22 @@ object ScalaReflection extends ScalaReflection {
               ArrayType(dt, false),
               "fromPrimitiveArray",
               input :: Nil)
+          } else if (classOf[Seq[_]].isAssignableFrom(cls) &&
+            !schemaFor(elementType).nullable) {
+            StaticInvoke(
+              classOf[UnsafeArrayData],
+              ArrayType(dt, false),
+              dt match {
+                case BooleanType => "fromBooleanSeq"
+                case ByteType => "fromByteSeq"
+                case ShortType => "fromShortSeq"
+                case IntegerType => "fromIntegerSeq"
+                case LongType => "fromLongSeq"
+                case FloatType => "fromFloatSeq"
+                case DoubleType => "fromDoubleSeq"
+              },
+              input ::
+              Nil)
           } else {
             NewInstance(
               classOf[GenericArrayData],

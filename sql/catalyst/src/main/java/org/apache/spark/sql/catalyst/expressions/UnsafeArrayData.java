@@ -486,4 +486,67 @@ public final class UnsafeArrayData extends ArrayData {
   public static UnsafeArrayData fromPrimitiveArray(double[] arr) {
     return fromPrimitiveArray(arr, Platform.DOUBLE_ARRAY_OFFSET, arr.length, 8);
   }
+
+  public static <T> UnsafeArrayData fromScalaSeq(scala.collection.Seq<T> seq, Class<T> cls) {
+    if (cls.equals(Boolean.class)) {
+      boolean[] arr = new boolean[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Boolean) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Byte.class)) {
+      byte[] arr = new byte[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Byte) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Short.class)) {
+      short[] arr = new short[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Short) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Integer.class)) {
+      int[] arr = new int[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Integer) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Long.class)) {
+      long[] arr = new long[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Long) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Float.class)) {
+      float[] arr = new float[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Float) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else if (cls.equals(Double.class)) {
+      double[] arr = new double[seq.size()];
+      for (int i = 0; i < arr.length; ++i) arr[i] = (Double) seq.apply(i);
+      return fromPrimitiveArray(arr);
+    } else {
+      throw new UnsupportedOperationException(
+        "Class " + cls.getName() + " is not supported by UnsafeArrayData");
+    }
+  }
+
+  public static UnsafeArrayData fromBooleanSeq(scala.collection.Seq<Boolean> seq) {
+      return fromScalaSeq(seq, Boolean.class);
+  }
+
+  public static UnsafeArrayData fromByteSeq(scala.collection.Seq<Byte> seq) {
+    return fromScalaSeq(seq, Byte.class);
+  }
+
+  public static UnsafeArrayData fromShortSeq(scala.collection.Seq<Short> seq) {
+    return fromScalaSeq(seq, Short.class);
+  }
+
+  public static UnsafeArrayData fromIntegerSeq(scala.collection.Seq<Integer> seq) {
+    return fromScalaSeq(seq, Integer.class);
+  }
+
+  public static UnsafeArrayData fromLongSeq(scala.collection.Seq<Long> seq) {
+    return fromScalaSeq(seq, Long.class);
+  }
+
+  public static UnsafeArrayData fromFloatSeq(scala.collection.Seq<Float> seq) {
+    return fromScalaSeq(seq, Float.class);
+  }
+
+  public static UnsafeArrayData fromDoubleSeq(scala.collection.Seq<Double> seq) {
+    return fromScalaSeq(seq, Double.class);
+  }
 }
